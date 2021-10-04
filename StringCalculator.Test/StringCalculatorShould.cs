@@ -32,11 +32,11 @@ namespace StringCalculator.Test {
         [Test]
         public void Return_a_number_when_input_is_that_number()
         {
-            const string input = "1";
+            const string input = "2";
 
             var result = StringCalculator.Add(input);
 
-            result.Should().Be(1);
+            result.Should().Be(2);
         }
     }
 }
