@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StringCalculator
 {
@@ -15,31 +16,15 @@ namespace StringCalculator
             if (input.Contains(SEPARATOR))
             {
                 var transformedInput = Transform(input);
-                return SumOfAllNumbers(transformedInput);
+                return transformedInput.Sum();
             }
 
             return int.Parse(input);
         }
 
-        private static int SumOfAllNumbers(IEnumerable<int> transformedInput)
-        {
-            var result = 0;
-            foreach (var number in transformedInput) {
-                result += number;
-            }
-            return result;
-        }
-
         private static IEnumerable<int> Transform(string input)
         {
-            var splittedInput = input.Split(SEPARATOR);
-            var result = new List<int>();
-
-            foreach (var number in splittedInput) {
-                result.Add(int.Parse(number));
-            }
-
-            return result.ToArray();
+            return input.Split(SEPARATOR).Select(int.Parse);
         }
     }
 }
