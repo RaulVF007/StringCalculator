@@ -38,5 +38,13 @@ namespace StringCalculator.Test {
 
             result.Should().Be(2);
         }
+
+        public void Return_3_when_input_is_1_and_2() {
+            const string input = "1,2";
+
+            var result = StringCalculator.Add(input);
+            
+            result.Should().Be(2);
+        }
     }
 }
