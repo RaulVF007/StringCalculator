@@ -1,3 +1,5 @@
+using System;
+using System.Reflection.Metadata.Ecma335;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -63,13 +65,23 @@ namespace StringCalculator.Test
         [TestCase("//:1:2:3", 6)]
         [TestCase("//:1:2\n3", 6)]
         [TestCase("//:\n1:2\n3", 6)]
-        public void return_addition_with_any_delimeter_and_new_lines(string input, int expected)
+        public void return_addition_with_any_delimiter_and_new_lines(string input, int expected)
         {
 
             var result = StringCalculator.Add(input);
 
             result.Should().Be(expected);
 
+        }
+
+        [Test]
+        public void return_exception_if_there_is_one_negative_number()
+        {
+            const string input = "1,4,-1";
+
+            Action act = () => StringCalculator.Add(input);
+
+            act.Should().Throw<Exception>().WithMessage("negatives not allowed: -1");
         }
     }
 }
