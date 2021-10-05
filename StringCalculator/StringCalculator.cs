@@ -39,8 +39,18 @@ namespace StringCalculator
         {
             foreach (int number in transformedInput)
             {
-                if (number < 0)
-                    throw new Exception("negatives not allowed: " + number);
+                if (number < 0) 
+                {
+                    string result = "";
+                    foreach (var possibleNegative in transformedInput)
+                    {
+                        if (possibleNegative < 0)
+                        {
+                            result += " " + possibleNegative;
+                        }
+                    }
+                    throw new Exception("negatives not allowed:" + result);
+                }
             }
         }
 
