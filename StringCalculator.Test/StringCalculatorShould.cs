@@ -58,14 +58,17 @@ namespace StringCalculator.Test
             result.Should().Be(expected);
         }
 
-        [Test]
-        public void return_addition_with_any_delimeter_and_new_lines()
+        [TestCase("//;\n1;2", 3)]
+        [TestCase("//;1;2", 3)]
+        [TestCase("//:1:2:3", 6)]
+        [TestCase("//:1:2\n3", 6)]
+        [TestCase("//:\n1:2\n3", 6)]
+        public void return_addition_with_any_delimeter_and_new_lines(string input, int expected)
         {
-            var input = "//;\n1;2";
 
             var result = StringCalculator.Add(input);
 
-            result.Should().Be(3);
+            result.Should().Be(expected);
 
         }
     }
