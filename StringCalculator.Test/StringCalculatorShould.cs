@@ -59,13 +59,14 @@ namespace StringCalculator.Test
         }
 
         [Test]
-        public void return_3_when_input_is_1_and_2_and_has_semicolon_as_delimiter()
+        public void return_addition_with_any_delimeter_and_new_lines()
         {
             var input = "//;\n1;2";
 
             var result = StringCalculator.Add(input);
 
             result.Should().Be(3);
+
         }
     }
 }
