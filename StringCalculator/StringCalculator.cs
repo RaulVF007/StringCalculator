@@ -7,7 +7,7 @@ namespace StringCalculator
 {
     public static class StringCalculator
     {
-        private const string SEPARATOR = ",";
+        private static string SEPARATOR = ",";
         private const string NEW_LINE_TAG = "\n";
 
         public static int Add(string input)
@@ -20,34 +20,53 @@ namespace StringCalculator
 
         private static int AdditionOfNumbers(string input)
         {
-            var formattedInput = FormatInputIfNecessary(input);
+            var findSeparator = FindSeparator(input);
+            var formattedInput = GetFormattedInput(input, findSeparator);
 
-            if (formattedInput.Contains(SEPARATOR))
+            if (formattedInput.Contains(findSeparator))
             {
-                var transformedInput = ConvertToIEnumerable(formattedInput);
+                var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
                 return transformedInput.Sum();
             }
 
             return int.Parse(formattedInput);
         }
 
-        private static IEnumerable<int> ConvertToIEnumerable(string input)
+        private static string GetFormattedInput(string input, string findSeparator)
         {
-            return input.Split(SEPARATOR).Select(int.Parse);
+            if (findSeparator.Equals(","))
+                return FormatInputIfNecessary(input, findSeparator);
+            
+            return FormatInputIfNecessary(input.Substring(3), findSeparator);
         }
 
-        private static string FormatInputIfNecessary(string input)
+        private static string FindSeparator(string input)
         {
-            if (input.Contains(NEW_LINE_TAG))
-            {
-                input = ChangeNewLinesToCommas(input);
-            }
-            return input;
+            if (input.StartsWith("//"))
+                return GetSeparator(input);
+            return ",";
         }
 
-        private static string ChangeNewLinesToCommas(string input)
+        private static string GetSeparator(string input)
         {
-            return input.Replace(NEW_LINE_TAG, SEPARATOR);
+            return input[2].ToString();
+        }
+
+        private static IEnumerable<int> ConvertToIEnumerable(string input, string separator)
+        {
+            return input.Split(separator).Select(int.Parse);
+        }
+
+        private static string FormatInputIfNecessary(string input, string separator)
+        {
+            if (input.StartsWith("\n"))
+                return ChangeNewLinesToSeparator(input.Substring(1), separator);
+            return ChangeNewLinesToSeparator(input, separator); ;
+        }
+
+        private static string ChangeNewLinesToSeparator(string input, string separator)
+        {
+            return input.Replace(NEW_LINE_TAG, separator);
         }
     }
 }
