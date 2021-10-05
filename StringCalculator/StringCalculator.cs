@@ -7,8 +7,9 @@ namespace StringCalculator
 {
     public static class StringCalculator
     {
-        private static string SEPARATOR = ",";
+        private const string DEFAULT_SEPARATOR = ",";
         private const string NEW_LINE_TAG = "\n";
+        private const string CHANGE_SEPARATOR_TAG = "//"; 
 
         public static int Add(string input)
         {
@@ -34,7 +35,7 @@ namespace StringCalculator
 
         private static string GetFormattedInput(string input, string findSeparator)
         {
-            if (findSeparator.Equals(","))
+            if (findSeparator.Equals(DEFAULT_SEPARATOR))
                 return FormatInputIfNecessary(input, findSeparator);
             
             return FormatInputIfNecessary(input.Substring(3), findSeparator);
@@ -42,9 +43,9 @@ namespace StringCalculator
 
         private static string FindSeparator(string input)
         {
-            if (input.StartsWith("//"))
+            if (input.StartsWith(CHANGE_SEPARATOR_TAG))
                 return GetSeparator(input);
-            return ",";
+            return DEFAULT_SEPARATOR;
         }
 
         private static string GetSeparator(string input)
@@ -59,7 +60,7 @@ namespace StringCalculator
 
         private static string FormatInputIfNecessary(string input, string separator)
         {
-            if (input.StartsWith("\n"))
+            if (input.StartsWith(NEW_LINE_TAG))
                 return ChangeNewLinesToSeparator(input.Substring(1), separator);
             return ChangeNewLinesToSeparator(input, separator); ;
         }
