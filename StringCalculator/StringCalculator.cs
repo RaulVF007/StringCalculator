@@ -15,34 +15,39 @@ namespace StringCalculator
             if (string.IsNullOrEmpty(input))
                 return 0;
 
-            return ProcessedInput(input);
+            return AdditionOfNumbers(input);
         }
 
-        private static int ProcessedInput(string input)
+        private static int AdditionOfNumbers(string input)
         {
+            var formattedInput = FormatInputIfNecessary(input);
 
+            if (formattedInput.Contains(SEPARATOR))
+            {
+                var transformedInput = ConvertToIEnumerable(formattedInput);
+                return transformedInput.Sum();
+            }
+
+            return int.Parse(formattedInput);
+        }
+
+        private static IEnumerable<int> ConvertToIEnumerable(string input)
+        {
+            return input.Split(SEPARATOR).Select(int.Parse);
+        }
+
+        private static string FormatInputIfNecessary(string input)
+        {
             if (input.Contains(NEW_LINE_TAG))
             {
                 input = ChangeNewLinesToCommas(input);
             }
-
-            if (input.Contains(SEPARATOR))
-            {
-                var transformedInput = Transform(input);
-                return transformedInput.Sum();
-            }
-
-            return int.Parse(input);
+            return input;
         }
 
         private static string ChangeNewLinesToCommas(string input)
         {
             return input.Replace(NEW_LINE_TAG, SEPARATOR);
-        }
-
-        private static IEnumerable<int> Transform(string input)
-        {
-            return input.Split(SEPARATOR).Select(int.Parse);
         }
     }
 }
