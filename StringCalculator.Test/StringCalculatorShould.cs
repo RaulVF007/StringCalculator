@@ -78,6 +78,16 @@ namespace StringCalculator.Test {
             result.Should().Be(6);
         }
 
+        [Test]
+        public void return_addition_when_input_is_two_numbers_and_has_new_line_tag()
+        {
+            var input = "1\n2";
+
+            var result = StringCalculator.Add(input);
+
+            result.Should().Be(3);
+        }
+
 
         
     }
