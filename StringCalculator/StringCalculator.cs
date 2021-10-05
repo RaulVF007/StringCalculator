@@ -27,11 +27,18 @@ namespace StringCalculator
             if (formattedInput.Contains(findSeparator))
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
+                foreach (int number in transformedInput)
+                {
+                    if (number < 0)
+                        throw new Exception("negatives not allowed: " + number);
+                }
+
                 return transformedInput.Sum();
             }
 
             return int.Parse(formattedInput);
         }
+
 
         private static string GetFormattedInput(string input, string findSeparator)
         {
