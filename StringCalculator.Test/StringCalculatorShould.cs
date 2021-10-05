@@ -68,6 +68,17 @@ namespace StringCalculator.Test {
             result.Should().Be(7);
         }
 
+        [Test]
+        public void return_6_when_input_is_1_2_and_3_and_has_new_line_tag_and_commas()
+        {
+            var input = "1\n2,3";
+
+            var result = StringCalculator.Add(input);
+
+            result.Should().Be(6);
+        }
+
+
         
     }
 }

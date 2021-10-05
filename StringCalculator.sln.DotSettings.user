@@ -1,0 +1,6 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e4693120_002D0cf1_002D40d8_002Db81b_002D8312da29bfe0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="return_6_when_input_is_1_2_and_3_and_has_new_line_tag_and_commas" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::8C73EDF9-20B7-481A-93E9-1C83AB87A809::.NETCoreApp,Version=v3.1::StringCalculator.Test.StringCalculatorShould.return_6_when_input_is_1_2_and_3_and_has_new_line_tag_and_commas&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
