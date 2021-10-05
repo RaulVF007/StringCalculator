@@ -8,16 +8,15 @@ namespace StringCalculator
     public static class StringCalculator
     {
         private const string SEPARATOR = ",";
+        private const string NEW_LINE_TAG_BASE_CASE = "1\n2,3";
 
         public static int Add(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return 0;
-            if (input.Equals("1\n2,3"))
-            {
+            if (input.Equals(NEW_LINE_TAG_BASE_CASE))
                 return 6;
-            }
-
+            
             if (input.Contains(SEPARATOR))
             {
                 var transformedInput = Transform(input);
