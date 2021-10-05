@@ -83,5 +83,15 @@ namespace StringCalculator.Test
 
             act.Should().Throw<Exception>().WithMessage("negatives not allowed: -1");
         }
+
+        [Test]
+        public void return_exception_if_there_is_more_than_one_negative_number()
+        {
+            const string input = "1,4,-1,-2";
+
+            Action act = () => StringCalculator.Add(input);
+
+            act.Should().Throw<Exception>().WithMessage("negatives not allowed: -1 -2");
+        }
     }
 }
