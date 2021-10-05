@@ -27,11 +27,7 @@ namespace StringCalculator
             if (formattedInput.Contains(findSeparator))
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
-                foreach (int number in transformedInput)
-                {
-                    if (number < 0)
-                        throw new Exception("negatives not allowed: " + number);
-                }
+                HasNegativeNumbers(transformedInput);
 
                 return transformedInput.Sum();
             }
@@ -39,6 +35,14 @@ namespace StringCalculator
             return int.Parse(formattedInput);
         }
 
+        private static void HasNegativeNumbers(IEnumerable<int> transformedInput)
+        {
+            foreach (int number in transformedInput)
+            {
+                if (number < 0)
+                    throw new Exception("negatives not allowed: " + number);
+            }
+        }
 
         private static string GetFormattedInput(string input, string findSeparator)
         {
