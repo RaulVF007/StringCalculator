@@ -16,7 +16,13 @@ namespace StringCalculator
                 return 0;
             if (input.Equals(NEW_LINE_TAG_BASE_CASE))
                 return 6;
-            
+            if (input.Contains("\n"))
+            {
+                var formattedInput = input.Replace("\n", ",");
+                var transformedInput = Transform(formattedInput);
+                return transformedInput.Sum();
+            }
+
             if (input.Contains(SEPARATOR))
             {
                 var transformedInput = Transform(input);
