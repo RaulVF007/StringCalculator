@@ -8,19 +8,22 @@ namespace StringCalculator
     public static class StringCalculator
     {
         private const string SEPARATOR = ",";
-        private const string NEW_LINE_TAG_BASE_CASE = "1\n2,3";
+        private const string NEW_LINE_TAG = "\n";
 
         public static int Add(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return 0;
-            if (input.Equals(NEW_LINE_TAG_BASE_CASE))
-                return 6;
-            if (input.Contains("\n"))
+
+            return ProcessedInput(input);
+        }
+
+        private static int ProcessedInput(string input)
+        {
+
+            if (input.Contains(NEW_LINE_TAG))
             {
-                var formattedInput = input.Replace("\n", ",");
-                var transformedInput = Transform(formattedInput);
-                return transformedInput.Sum();
+                input = ChangeNewLinesToCommas(input);
             }
 
             if (input.Contains(SEPARATOR))
@@ -30,6 +33,11 @@ namespace StringCalculator
             }
 
             return int.Parse(input);
+        }
+
+        private static string ChangeNewLinesToCommas(string input)
+        {
+            return input.Replace(NEW_LINE_TAG, SEPARATOR);
         }
 
         private static IEnumerable<int> Transform(string input)
