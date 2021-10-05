@@ -9,7 +9,8 @@ namespace StringCalculator
     {
         private const string DEFAULT_SEPARATOR = ",";
         private const string NEW_LINE_TAG = "\n";
-        private const string CHANGE_SEPARATOR_TAG = "//"; 
+        private const string CHANGE_SEPARATOR_TAG = "//";
+        private const string EMPTY_STRING = "";
 
         public static int Add(string input)
         {
@@ -27,7 +28,7 @@ namespace StringCalculator
             if (formattedInput.Contains(findSeparator))
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
-                HasNegativeNumbers(transformedInput);
+                VerifyAllPositiveNumbers(transformedInput);
 
                 return transformedInput.Sum();
             }
@@ -35,23 +36,16 @@ namespace StringCalculator
             return int.Parse(formattedInput);
         }
 
-        private static void HasNegativeNumbers(IEnumerable<int> transformedInput)
+        private static void VerifyAllPositiveNumbers(IEnumerable<int> transformedInput)
         {
-            foreach (int number in transformedInput)
+            string result = EMPTY_STRING;
+            foreach (var possibleNegative in transformedInput)
             {
-                if (number < 0) 
-                {
-                    string result = "";
-                    foreach (var possibleNegative in transformedInput)
-                    {
-                        if (possibleNegative < 0)
-                        {
-                            result += " " + possibleNegative;
-                        }
-                    }
-                    throw new Exception("negatives not allowed:" + result);
-                }
+                if (possibleNegative < 0)
+                    result += " " + possibleNegative;
             }
+            if(!result.Equals(EMPTY_STRING))
+                throw new Exception("negatives not allowed:" + result);
         }
 
         private static string GetFormattedInput(string input, string findSeparator)
