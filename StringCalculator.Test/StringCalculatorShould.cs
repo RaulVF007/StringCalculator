@@ -84,5 +84,15 @@ namespace StringCalculator.Test
 
             act.Should().Throw<Exception>().WithMessage(expected);
         }
+
+        [Test]
+        public void return_zero_if_input_is_one_thousand_and_one()
+        {
+            string input = "1001";
+
+            var result = StringCalculator.Add("1001");
+
+            result.Should().Be(0);
+        }
     }
 }
