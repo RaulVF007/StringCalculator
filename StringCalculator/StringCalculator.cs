@@ -29,13 +29,10 @@ namespace StringCalculator
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
                 VerifyAllPositiveNumbers(transformedInput);
-                //var normalizedInput = SuppressBigNumbers(transformedInput);
-
-                //return normalizedInput.Sum();
                 return transformedInput.Sum();
             }
 
-            if (!NotABigNumber(formattedInput)) return 0;
+            if (!SmallNumber(formattedInput)) return 0;
             return int.Parse(formattedInput);
         }
 
@@ -51,7 +48,7 @@ namespace StringCalculator
                 throw new Exception("negatives not allowed:" + result);
         }
 
-        private static bool NotABigNumber(string input)
+        private static bool SmallNumber(string input)
         {
             if (int.TryParse(input, out int bigNumber))
                 if (bigNumber <= 1000) return true;
@@ -81,7 +78,7 @@ namespace StringCalculator
 
         private static IEnumerable<int> ConvertToIEnumerable(string input, string separator)
         {
-            return input.Split(separator).Where(NotABigNumber).Select(int.Parse);
+            return input.Split(separator).Where(SmallNumber).Select(int.Parse);
         }
 
         private static string FormatInputIfNecessary(string input, string separator)
