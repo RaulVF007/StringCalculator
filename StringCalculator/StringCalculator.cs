@@ -44,6 +44,7 @@ namespace StringCalculator
                 return GetSeparator(input);
             return DEFAULT_SEPARATOR;
         }
+
         private static string GetSeparator(string input)
         {
             return input[2].ToString();
@@ -86,16 +87,17 @@ namespace StringCalculator
         {
             var negativeList = transformedInput.Where(IsNegativeNumber).ToList();
             if (negativeList.ToList().Count>0)
-                throw new Exception(NegativeValuesAsString(negativeList));
+                throw new Exception(GetNegativeNumbersException(negativeList));
         }
+
         private static bool IsNegativeNumber(int input)
         {
             return input < 0;
         }
 
-        private static string NegativeValuesAsString(IEnumerable<int> input)
+        private static string GetNegativeNumbersException(IEnumerable<int> input)
         {
-            string result = EMPTY_STRING;
+            var result = EMPTY_STRING;
             foreach (var negative in input)
                 result += " " + negative;
             return EXC_NEGATIVE_NOT_ALLOWED + result;
