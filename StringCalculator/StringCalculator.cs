@@ -12,6 +12,8 @@ namespace StringCalculator
         private const string CHANGE_SEPARATOR_TAG = "//";
         private const string EMPTY_STRING = "";
 
+        private const string EXC_NEGATIVE_NOT_ALLOWED = "negatives not allowed:";
+
         public static int Add(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -96,7 +98,7 @@ namespace StringCalculator
             string result = EMPTY_STRING;
             foreach (var negative in input)
                 result += " " + negative;
-            return "negatives not allowed:" + result;
+            return EXC_NEGATIVE_NOT_ALLOWED + result;
         }
     }
 }
