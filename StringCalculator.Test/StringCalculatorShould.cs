@@ -90,7 +90,17 @@ namespace StringCalculator.Test
         {
             string input = "1001";
 
-            var result = StringCalculator.Add("1001");
+            var result = StringCalculator.Add(input);
+
+            result.Should().Be(0);
+        }
+
+        [Test]
+        public void return_zero_if_input_is_one_thousand_and_two()
+        {
+            string input = "1002";
+
+            var result = StringCalculator.Add(input);
 
             result.Should().Be(0);
         }
