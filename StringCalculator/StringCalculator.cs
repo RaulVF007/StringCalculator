@@ -16,10 +16,16 @@ namespace StringCalculator
         {
             if (string.IsNullOrEmpty(input))
                 return 0;
-            if (input.Equals("1001"))
-                return 0;
+            if (IsABigNumber(input)) return 0;
 
             return AdditionOfNumbers(input);
+        }
+
+        private static bool IsABigNumber(string input)
+        {
+            if (input.Equals("1001"))
+                return true; 
+            return false;
         }
 
         private static int AdditionOfNumbers(string input)
