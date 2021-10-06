@@ -114,5 +114,15 @@ namespace StringCalculator.Test
 
             result.Should().Be(0);
         }
+        
+        [Test]
+        public void return_addition_when_there_is_at_least_a_big_number()
+        {
+            string input = "1,2000";
+
+            var result = StringCalculator.Add(input);
+
+            result.Should().Be(1);
+        }
     }
 }
