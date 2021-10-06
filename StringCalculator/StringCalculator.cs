@@ -82,14 +82,21 @@ namespace StringCalculator
 
         private static void VerifyAllPositiveNumbers(IEnumerable<int> transformedInput)
         {
+            var negativeList = transformedInput.Where(IsNegativeNumber).ToList();
+            if (negativeList.ToList().Count>0)
+                throw new Exception(NegativeValuesAsString(negativeList));
+        }
+        private static bool IsNegativeNumber(int input)
+        {
+            return input < 0;
+        }
+
+        private static string NegativeValuesAsString(IEnumerable<int> input)
+        {
             string result = EMPTY_STRING;
-            foreach (var possibleNegative in transformedInput)
-            {
-                if (possibleNegative < 0)
-                    result += " " + possibleNegative;
-            }
-            if (!result.Equals(EMPTY_STRING))
-                throw new Exception("negatives not allowed:" + result);
+            foreach (var negative in input)
+                result += " " + negative;
+            return "negatives not allowed:" + result;
         }
     }
 }
