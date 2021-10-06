@@ -84,45 +84,19 @@ namespace StringCalculator.Test
 
             act.Should().Throw<Exception>().WithMessage(expected);
         }
-
-        [Test]
-        public void return_zero_if_input_is_one_thousand_and_one()
+                
+        [TestCase("1001", 0)]
+        [TestCase("1002", 0)]
+        [TestCase("2000", 0)]
+        [TestCase("1,2000", 1)]
+        [TestCase("2000,5", 5)]
+        [TestCase("//:2000:5", 5)]
+        [TestCase("//:2000:5:6", 11)]
+        public void return_addition_when_there_is_at_least_a_big_number(string input, int expected)
         {
-            string input = "1001";
-
             var result = StringCalculator.Add(input);
 
-            result.Should().Be(0);
-        }
-
-        [Test]
-        public void return_zero_if_input_is_one_thousand_and_two()
-        {
-            string input = "1002";
-
-            var result = StringCalculator.Add(input);
-
-            result.Should().Be(0);
-        }
-
-        [Test]
-        public void return_zero_if_input_is_a_number_bigger_than_one_thousand()
-        {
-            string input = "2000";
-
-            var result = StringCalculator.Add(input);
-
-            result.Should().Be(0);
-        }
-        
-        [Test]
-        public void return_addition_when_there_is_at_least_a_big_number()
-        {
-            string input = "1,2000";
-
-            var result = StringCalculator.Add(input);
-
-            result.Should().Be(1);
+            result.Should().Be(expected);
         }
     }
 }
