@@ -74,24 +74,15 @@ namespace StringCalculator.Test
 
         }
 
-        [Test]
-        public void return_exception_if_there_is_one_negative_number()
+        [TestCase("1,4,-1", "negatives not allowed: -1")]
+        [TestCase("1,4,-1,-2", "negatives not allowed: -1 -2")]
+        [TestCase("//;1;4;-1;-2", "negatives not allowed: -1 -2")]
+        [TestCase("//:\n1:4\n-1:-2:-3", "negatives not allowed: -1 -2 -3")]
+        public void return_exception_if_there_is_at_least_one_negative_number(string input, string expected)
         {
-            const string input = "1,4,-1";
-
             Action act = () => StringCalculator.Add(input);
 
-            act.Should().Throw<Exception>().WithMessage("negatives not allowed: -1");
-        }
-
-        [Test]
-        public void return_exception_if_there_is_more_than_one_negative_number()
-        {
-            const string input = "1,4,-1,-2";
-
-            Action act = () => StringCalculator.Add(input);
-
-            act.Should().Throw<Exception>().WithMessage("negatives not allowed: -1 -2");
+            act.Should().Throw<Exception>().WithMessage(expected);
         }
     }
 }
