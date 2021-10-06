@@ -104,5 +104,15 @@ namespace StringCalculator.Test
 
             result.Should().Be(0);
         }
+
+        [Test]
+        public void return_zero_if_input_is_a_number_bigger_than_one_thousand()
+        {
+            string input = "2000";
+
+            var result = StringCalculator.Add(input);
+
+            result.Should().Be(0);
+        }
     }
 }
