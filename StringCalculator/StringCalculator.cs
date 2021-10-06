@@ -29,12 +29,13 @@ namespace StringCalculator
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
                 VerifyAllPositiveNumbers(transformedInput);
-                var normalizedInput = IgnoreBigNumbers(transformedInput);
+                //var normalizedInput = SuppressBigNumbers(transformedInput);
 
-                return normalizedInput.Sum();
+                //return normalizedInput.Sum();
+                return transformedInput.Sum();
             }
 
-            if (IsABigNumber(formattedInput)) return 0;
+            if (!NotABigNumber(formattedInput)) return 0;
             return int.Parse(formattedInput);
         }
 
@@ -50,10 +51,10 @@ namespace StringCalculator
                 throw new Exception("negatives not allowed:" + result);
         }
 
-        private static bool IsABigNumber(string input)
+        private static bool NotABigNumber(string input)
         {
             if (int.TryParse(input, out int bigNumber))
-                if (bigNumber > 1000) return true;
+                if (bigNumber <= 1000) return true;
             
             return false;
         }
@@ -80,7 +81,7 @@ namespace StringCalculator
 
         private static IEnumerable<int> ConvertToIEnumerable(string input, string separator)
         {
-            return input.Split(separator).Select(int.Parse);
+            return input.Split(separator).Where(NotABigNumber).Select(int.Parse);
         }
 
         private static string FormatInputIfNecessary(string input, string separator)
@@ -93,19 +94,6 @@ namespace StringCalculator
         private static string ChangeNewLinesToSeparator(string input, string separator)
         {
             return input.Replace(NEW_LINE_TAG, separator);
-        }
-
-        private static IEnumerable<int> IgnoreBigNumbers(IEnumerable<int> transformedInput)
-        {
-            List<int> result = new List<int>();
-            foreach (var number in transformedInput)
-            {
-                if (IsABigNumber(number.ToString()))
-                    result.Add(0);
-                else
-                    result.Add(number);
-            }
-            return result;
         }
     }
 }
