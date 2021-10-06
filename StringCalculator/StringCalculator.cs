@@ -23,8 +23,9 @@ namespace StringCalculator
 
         private static bool IsABigNumber(string input)
         {
-            if (input.Equals("1001") || input.Equals("1002"))
-                return true;
+            if(int.TryParse(input, out int bigNumber)){
+                if (bigNumber > 1000) return true;
+            }
             return false;
         }
 
