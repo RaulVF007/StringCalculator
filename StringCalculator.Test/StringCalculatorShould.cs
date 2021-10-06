@@ -1,5 +1,4 @@
 using System;
-using System.Reflection.Metadata.Ecma335;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -9,12 +8,12 @@ namespace StringCalculator.Test
     {
 
         [Test]
-        public void return_0_when_string_is_empty()
+        public void return_zero_when_string_is_empty()
         {
             // Given
             const string input = "";
             // When
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
             // Then
             result.Should().Be(0);
         }
@@ -24,7 +23,7 @@ namespace StringCalculator.Test
         [TestCase("3", 3)]
         public void return_a_number_when_input_is_that_number(string input, int expected)
         {
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
         }
@@ -34,7 +33,7 @@ namespace StringCalculator.Test
         [TestCase("3,2", 5)]
         public void return_addition_when_input_is_two_numbers(string input, int expected)
         {
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
         }
@@ -44,7 +43,7 @@ namespace StringCalculator.Test
         [TestCase("3,2,4", 9)]
         public void return_addition_when_input_is_more_than_two_numbers(string input, int expected)
         {
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
         }
@@ -55,7 +54,7 @@ namespace StringCalculator.Test
         public void return_addition_when_input_has_both_delimiters(string input, int expected)
         {
 
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
         }
@@ -68,19 +67,20 @@ namespace StringCalculator.Test
         public void return_addition_with_any_delimiter_and_new_lines(string input, int expected)
         {
 
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
 
         }
 
+        [TestCase("-1", "negatives not allowed: -1")]
         [TestCase("1,4,-1", "negatives not allowed: -1")]
         [TestCase("1,4,-1,-2", "negatives not allowed: -1 -2")]
         [TestCase("//;1;4;-1;-2", "negatives not allowed: -1 -2")]
         [TestCase("//:\n1:4\n-1:-2:-3", "negatives not allowed: -1 -2 -3")]
         public void return_exception_if_there_is_at_least_one_negative_number(string input, string expected)
         {
-            Action act = () => StringCalculator.Add(input);
+            Action act = () => StringCalculator.Execute(input);
 
             act.Should().Throw<Exception>().WithMessage(expected);
         }
@@ -94,7 +94,7 @@ namespace StringCalculator.Test
         [TestCase("//:2000:5:6", 11)]
         public void return_addition_when_there_is_at_least_a_big_number(string input, int expected)
         {
-            var result = StringCalculator.Add(input);
+            var result = StringCalculator.Execute(input);
 
             result.Should().Be(expected);
         }

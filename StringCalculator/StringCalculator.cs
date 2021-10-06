@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,59 +9,39 @@ namespace StringCalculator
         private const string DEFAULT_SEPARATOR = ",";
         private const string NEW_LINE_TAG = "\n";
         private const string CHANGE_SEPARATOR_TAG = "//";
-        private const string EMPTY_STRING = "";
 
-        private const string EXC_NEGATIVE_NOT_ALLOWED = "negatives not allowed:";
+        private const string EXC_NEGATIVE_NOT_ALLOWED = @"negatives not allowed:{0}";
 
-        public static int Add(string input)
+        public static int Execute(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return 0;
-
-            return AdditionOfNumbers(input);
+            if (string.IsNullOrEmpty(input)) return 0;
+            var numbers = Transform(input);
+            var validNumbers = GetValidNumbers(numbers);
+            return validNumbers.Sum();
         }
 
-        private static int AdditionOfNumbers(string input)
+        private static IEnumerable<int> Transform(string input)
         {
-            var findSeparator = FindSeparator(input);
-            var formattedInput = GetFormattedInput(input, findSeparator);
-
-            if (formattedInput.Contains(findSeparator))
-            {
-                var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator).ToList();
-                VerifyAllPositiveNumbers(transformedInput);
-                return transformedInput.Sum();
-            }
-
-            if (!IsSmallNumber(formattedInput)) return 0;
-            return int.Parse(formattedInput);
-        }
-
-        private static string FindSeparator(string input)
-        {
-            if (input.StartsWith(CHANGE_SEPARATOR_TAG))
-                return GetSeparator(input);
-            return DEFAULT_SEPARATOR;
+            var separator = GetSeparator(input);
+            var formattedInput = GetFormattedInput(input, separator);
+            if (formattedInput.StartsWith(separator))
+                formattedInput = formattedInput.Substring(1);
+            return GetNumbers(formattedInput, separator);
         }
 
         private static string GetSeparator(string input)
         {
-            return input[2].ToString();
+            if (input.StartsWith(CHANGE_SEPARATOR_TAG))
+                return input[2].ToString();
+            return DEFAULT_SEPARATOR;
         }
-
-        private static string GetFormattedInput(string input, string findSeparator)
+        
+        private static string GetFormattedInput(string input, string separator)
         {
-            if (findSeparator.Equals(DEFAULT_SEPARATOR))
-                return FormatInputIfNecessary(input, findSeparator);
+            if (separator.Equals(DEFAULT_SEPARATOR))
+                return ChangeNewLinesToSeparator(input, separator);
 
-            return FormatInputIfNecessary(input.Substring(3), findSeparator);
-        }
-
-        private static string FormatInputIfNecessary(string input, string separator)
-        {
-            if (input.StartsWith(NEW_LINE_TAG))
-                return ChangeNewLinesToSeparator(input.Substring(1), separator);
-            return ChangeNewLinesToSeparator(input, separator); ;
+            return ChangeNewLinesToSeparator(input.Substring(3), separator);
         }
 
         private static string ChangeNewLinesToSeparator(string input, string separator)
@@ -70,37 +49,35 @@ namespace StringCalculator
             return input.Replace(NEW_LINE_TAG, separator);
         }
 
-        private static IEnumerable<int> ConvertToIEnumerable(string input, string separator)
+        private static IEnumerable<int> GetNumbers(string input, string separator)
         {
-            return input.Split(separator).Where(IsSmallNumber).Select(int.Parse);
+            return input.Split(separator).Select(int.Parse);
         }
 
-        private static bool IsSmallNumber(string input)
+        private static bool IsSmallNumber(int number)
         {
-            if (int.TryParse(input, out int bigNumber))
-                if (bigNumber <= 1000) return true;
-
-            return false;
+            return number <= 1000;
         }
 
-        private static void VerifyAllPositiveNumbers(IEnumerable<int> transformedInput)
+        private static IEnumerable<int> GetValidNumbers(IEnumerable<int> numbers)
         {
-            var negativeList = transformedInput.Where(IsNegativeNumber).ToList();
-            if (negativeList.ToList().Count>0)
-                throw new Exception(GetNegativeNumbersException(negativeList));
+            var negativeList = numbers.Where(IsNegativeNumber);
+            if (negativeList.Any())
+                throw new Exception(GetNegativeMessageException(negativeList));
+            return numbers.Where(IsSmallNumber);
         }
 
-        private static bool IsNegativeNumber(int input)
+        private static bool IsNegativeNumber(int number)
         {
-            return input < 0;
+            return number < 0;
         }
 
-        private static string GetNegativeNumbersException(IEnumerable<int> input)
+        private static string GetNegativeMessageException(IEnumerable<int> negativeNumbers)
         {
-            var result = EMPTY_STRING;
-            foreach (var negative in input)
+            var result = string.Empty;
+            foreach (var negative in negativeNumbers)
                 result += " " + negative;
-            return EXC_NEGATIVE_NOT_ALLOWED + result;
+            return string.Format(EXC_NEGATIVE_NOT_ALLOWED, result);
         }
     }
 }
