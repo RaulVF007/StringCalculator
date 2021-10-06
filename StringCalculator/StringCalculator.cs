@@ -29,8 +29,9 @@ namespace StringCalculator
             {
                 var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
                 VerifyAllPositiveNumbers(transformedInput);
+                var normalizedInput = IgnoreBigNumbers(transformedInput);
 
-                return transformedInput.Sum();
+                return normalizedInput.Sum();
             }
 
             if (IsABigNumber(formattedInput)) return 0;
@@ -92,6 +93,19 @@ namespace StringCalculator
         private static string ChangeNewLinesToSeparator(string input, string separator)
         {
             return input.Replace(NEW_LINE_TAG, separator);
+        }
+
+        private static IEnumerable<int> IgnoreBigNumbers(IEnumerable<int> transformedInput)
+        {
+            List<int> result = new List<int>();
+            foreach (var number in transformedInput)
+            {
+                if (IsABigNumber(number.ToString()))
+                    result.Add(0);
+                else
+                    result.Add(number);
+            }
+            return result;
         }
     }
 }
