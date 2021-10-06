@@ -29,7 +29,7 @@ namespace StringCalculator
 
             if (formattedInput.Contains(findSeparator))
             {
-                var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator);
+                var transformedInput = ConvertToIEnumerable(formattedInput, findSeparator).ToList();
                 VerifyAllPositiveNumbers(transformedInput);
                 return transformedInput.Sum();
             }
