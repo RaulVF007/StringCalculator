@@ -16,17 +16,8 @@ namespace StringCalculator
         {
             if (string.IsNullOrEmpty(input))
                 return 0;
-            if (IsABigNumber(input)) return 0;
 
             return AdditionOfNumbers(input);
-        }
-
-        private static bool IsABigNumber(string input)
-        {
-            if(int.TryParse(input, out int bigNumber)){
-                if (bigNumber > 1000) return true;
-            }
-            return false;
         }
 
         private static int AdditionOfNumbers(string input)
@@ -42,6 +33,7 @@ namespace StringCalculator
                 return transformedInput.Sum();
             }
 
+            if (IsABigNumber(formattedInput)) return 0;
             return int.Parse(formattedInput);
         }
 
@@ -55,6 +47,14 @@ namespace StringCalculator
             }
             if(!result.Equals(EMPTY_STRING))
                 throw new Exception("negatives not allowed:" + result);
+        }
+
+        private static bool IsABigNumber(string input)
+        {
+            if (int.TryParse(input, out int bigNumber))
+                if (bigNumber > 1000) return true;
+            
+            return false;
         }
 
         private static string GetFormattedInput(string input, string findSeparator)
