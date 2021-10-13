@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Reflection.PortableExecutable;
-using System.Text;
 
 namespace StringCalculator
 {
@@ -11,21 +7,17 @@ namespace StringCalculator
         public static void Main(string[] args)
         {
             GiveWelcomeToUser();
-            while (true)
-            {
                 try
                 {
                     CalculateStringInput();
-                    StringCalculatorLogger.Log();
                     DisplayInstructions();
                 }
                 catch (Exception e)
                 {
                     DisplayExceptionMessageInConsole(e);
-                    StringCalculatorLogger.Log();
                     DisplayInstructions();
                 }
-            }
+            
         }
 
         private static void DisplayInstructions()
@@ -44,7 +36,9 @@ namespace StringCalculator
             var consoleInput = Console.ReadLine();
             if (consoleInput.Equals("q"))
                 Environment.Exit(0);
-            Console.WriteLine(StringCalculator.Execute(consoleInput));
+            var calculatedString = StringCalculator.Execute(consoleInput);
+            Console.WriteLine(calculatedString);
+            StringCalculatorLogger.Log(consoleInput, calculatedString);
         }
 
         private static void DisplayExceptionMessageInConsole(Exception e)
