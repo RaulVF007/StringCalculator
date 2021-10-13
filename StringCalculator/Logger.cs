@@ -12,10 +12,15 @@ namespace StringCalculator
             var folder = @"C:\Users\aahernandez\source\repos\Katas\StringCalculator\Logs\";
             var filename = "SampleLog.txt";
             var path = folder + filename;
-            string[] pruebalog = {"probando esto a ver si funca"};
+            string[] pruebalog = { getCurrentDate() + " - probando esto a ver si funca" };
 
-            File.WriteAllLines(path, pruebalog);
+            File.AppendAllLines(path, pruebalog);
             Console.WriteLine("Logs Actualizados");
+        }
+
+        private static string getCurrentDate()
+        {
+            return DateTime.Now.ToString("R");
         }
     }
 }
