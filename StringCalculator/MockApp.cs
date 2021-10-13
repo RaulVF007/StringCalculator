@@ -16,11 +16,13 @@ namespace StringCalculator
                 try
                 {
                     CalculateStringInput();
+                    StringCalculatorLogger.Log();
                     DisplayInstructions();
                 }
                 catch (Exception e)
                 {
                     DisplayExceptionMessageInConsole(e);
+                    StringCalculatorLogger.Log();
                     DisplayInstructions();
                 }
             }
@@ -28,7 +30,7 @@ namespace StringCalculator
 
         private static void DisplayInstructions()
         {
-            Console.WriteLine("FINALIZADO: Inserte una sucesión de caracteres o 'q' para salir");
+            Console.WriteLine("Inserte una sucesión de caracteres o 'q' para salir");
         }
 
         private static void GiveWelcomeToUser()
