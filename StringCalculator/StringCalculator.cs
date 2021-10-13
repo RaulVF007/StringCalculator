@@ -9,7 +9,6 @@ namespace StringCalculator
         private const string DEFAULT_SEPARATOR = ",";
         private const string NEW_LINE_TAG = "\n";
         private const string CHANGE_SEPARATOR_TAG = "//";
-
         private const string EXC_NEGATIVE_NOT_ALLOWED = @"negatives not allowed:{0}";
 
         public static int Execute(string input)
@@ -63,7 +62,7 @@ namespace StringCalculator
         {
             var negativeList = numbers.Where(IsNegativeNumber);
             if (negativeList.Any())
-                throw new Exception(GetNegativeMessageException(negativeList));
+                throw new ArithmeticException(GetNegativeMessageException(negativeList));
             return numbers.Where(IsSmallNumber);
         }
 
