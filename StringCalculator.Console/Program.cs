@@ -1,5 +1,4 @@
-﻿using System;
-using StringCalculator.Infrastructure;
+﻿using StringCalculator.Infrastructure;
 using StringCalculator.Application.Actions;
 
 namespace StringCalculator.Console

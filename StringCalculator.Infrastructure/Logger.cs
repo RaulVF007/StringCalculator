@@ -4,7 +4,7 @@ using StringCalculator.Application.Model;
 
 namespace StringCalculator.Infrastructure
 {
-    public class StringCalculatorLogger : Logger
+    public class StringCalculatorLogger : ILogger
     {
         public static readonly string LOG_FOLDER = Directory.GetCurrentDirectory();
         public static readonly string LOG_FILE = "Log.txt";
