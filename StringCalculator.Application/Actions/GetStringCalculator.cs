@@ -19,7 +19,6 @@ namespace StringCalculator.Application.Actions
         public void Execute()
         {
             GiveWelcomeToUser();
-            DisplayInstructions();
             while (true)
             {
                 var consoleInput = Console.ReadLine();
@@ -31,12 +30,12 @@ namespace StringCalculator.Application.Actions
                 catch (ArithmeticException e)
                 {
                     logger.AddErrorEntry(consoleInput, e.Message);
-                    Console.WriteLine("Task failed: See Errors.txt in Logs folder for more info.\n");
+                    Console.WriteLine("Task failed: See Errors.txt for more info.\n");
                 }
                 catch
                 {
                     logger.AddErrorEntry(consoleInput, "ERROR: Incorrect Format");
-                    Console.WriteLine("Task failed: See Errors.txt in Logs folder for more info.\n");
+                    Console.WriteLine("Task failed: See Errors.txt for more info.\n");
                 }
                 DisplayInstructions();
             }
@@ -59,9 +58,7 @@ namespace StringCalculator.Application.Actions
 
         private static void DisplayInstructions()
         {
-            Console.WriteLine("Please, type the operation to process. It must fulfill the following format:\n" +
-                              "-- Format Rules--\n" +
-                              "Input:");
+            Console.WriteLine("Please, type the input to process");
         }
     }
 }
