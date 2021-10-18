@@ -1,2 +1,5 @@
 18/10/2021 15:09 - Process Finished: '//;
 1;2;3', result: ERROR: Incorrect Format
+18/10/2021 15:25 - Process Finished: '//;%0D%0A1;2;3', result: ERROR: Incorrect Format
+18/10/2021 15:26 - Process Finished: '//;%0D%0A1;2;3', result: ERROR: Incorrect Format
+18/10/2021 15:27 - Process Finished: '//:\n1:2:3', result: ERROR: Incorrect Format

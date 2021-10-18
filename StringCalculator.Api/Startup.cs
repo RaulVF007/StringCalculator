@@ -1,12 +1,13 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using StringCalculator.Application.Actions;
 using StringCalculator.Infrastructure;
 using ILogger = StringCalculator.Application.Model.ILogger;
+using Microsoft.OpenApi.Models;
 
 namespace StringCalculator.Api
 {
@@ -25,6 +26,28 @@ namespace StringCalculator.Api
             services.AddControllers();
             services.AddScoped<GetStringCalculator>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
+            AddSwagger(services);
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Foo {groupName}",
+                    Version = groupName,
+                    Description = "Foo API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Foo Company",
+                        Email = string.Empty,
+                        Url = new Uri("https://foo.com/"),
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +66,11 @@ namespace StringCalculator.Api
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foo API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
