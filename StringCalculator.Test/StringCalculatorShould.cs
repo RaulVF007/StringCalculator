@@ -98,12 +98,15 @@ namespace StringCalculator.Test
             result.Should().Be(expected);
         }
 
-        [Test]
-        public void return_add_negative_numbers_in_version_2()
+        [TestCase("-1", -1)]
+        [TestCase("1,4,-1", 4)]
+        [TestCase("1,4,-1,-2", 2)]
+        [TestCase("//;1;4;-1;-2", 2)]
+        [TestCase("//:\n1:4\n-1:-2:-3", -1)]
+        public void return_add_negative_numbers_in_version_2(string input, int expected)
         {
-            var input = "-1";
             var result = StringCalculator.ExecuteV2(input);
-            result.Should().Be(-1);
+            result.Should().Be(expected);
         }
 
     }
