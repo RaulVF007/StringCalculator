@@ -24,6 +24,7 @@ namespace StringCalculator.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHealthChecks();
             services.AddScoped<GetStringCalculator>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
             AddSwagger(services);
@@ -75,6 +76,7 @@ namespace StringCalculator.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
