@@ -5,7 +5,7 @@ using StringCalculator.Application.Actions;
 namespace StringCalculator.Api.Controllers
 {
     [ApiVersion("2")]
-    [Route("api/v{version:apiVersion}/StringCalculator")]
+    [Route("api/v{version:apiVersion}/StringCalculatorV2")]
     [ApiController]
     [Produces("application/json")]
     public class StringCalculatorV2 : ControllerBase

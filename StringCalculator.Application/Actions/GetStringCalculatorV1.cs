@@ -15,22 +15,22 @@ namespace StringCalculator.Application.Actions
 
         public string Execute(string input)
         {
-                var consoleInput = input;
-                try
-                {
-                    var result = CalculateStringInput(consoleInput);
-                    return result;
-                }
-                catch (ArithmeticException e)
-                {
-                    logger.AddErrorEntry(consoleInput, e.Message);
-                    throw e;
-                }
-                catch(Exception e)
-                {
-                    logger.AddErrorEntry(consoleInput, "ERROR: Incorrect Format");
-                    throw e;
-                }
+            var consoleInput = input;
+            try
+            {
+                var result = CalculateStringInput(consoleInput);
+                return result;
+            }
+            catch (ArithmeticException e)
+            {
+                logger.AddErrorEntry(consoleInput, e.Message);
+                throw e;
+            }
+            catch(Exception e)
+            {
+                logger.AddErrorEntry(consoleInput, "ERROR: Incorrect Format");
+                throw e;
+            }
         }
 
         private string CalculateStringInput(string consoleInput)

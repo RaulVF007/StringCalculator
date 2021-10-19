@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -10,16 +11,16 @@ namespace StringCalculator.Api.HealthChecks
             HealthCheckContext context, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = false;
+            var healthCheckResultHealthy = Directory.Exists("../Logs");
             if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
-                    HealthCheckResult.Healthy("A healthy result."));
+                    HealthCheckResult.Healthy("Logs have been updated succesfully"));
             }
 
             return Task.FromResult(
                 new HealthCheckResult(context.Registration.FailureStatus,
-                    "An unhealthy result."));
+                    "Logs have not been updated succesfully"));
         }
     }
 }

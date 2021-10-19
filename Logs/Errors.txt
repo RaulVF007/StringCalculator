@@ -1,0 +1,2 @@
+19/10/2021 14:15 - Process Finished: '1,2,-3', result: negatives not allowed: -3
+19/10/2021 14:18 - Process Finished: 'a', result: ERROR: Incorrect Format

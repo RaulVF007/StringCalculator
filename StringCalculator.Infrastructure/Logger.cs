@@ -6,13 +6,13 @@ namespace StringCalculator.Infrastructure
 {
     public class StringCalculatorLogger : ILogger
     {
-        public static readonly string LOG_FOLDER = Directory.GetCurrentDirectory();
+        public static readonly string LOG_FOLDER = "../Logs/";
         public static readonly string LOG_FILE = "Log.txt";
         public static readonly string ERROR_FILE = "Errors.txt";
 
         public void AddEntry(string consoleInput, int calculatedString)
         {
-            var folder = LOG_FOLDER;
+            var folder = GetLogFolder();
             var filename = LOG_FILE;
             var path = folder + filename;
             WriteToLog(GetLogMsg(consoleInput, calculatedString.ToString()), path);
@@ -25,6 +25,17 @@ namespace StringCalculator.Infrastructure
             var path = folder + filename;
             WriteToLog(GetLogMsg(consoleInput, message), path);
         }
+
+        private static string GetLogFolder()
+        {
+            if (!Directory.Exists(LOG_FOLDER))
+            {
+                Directory.CreateDirectory(LOG_FOLDER);
+            }
+
+            return LOG_FOLDER;
+        }
+
         private static void WriteToLog(string logMessage, string path)
         {
             string[] pruebalog = { GetCurrentDate() + " - " + logMessage };

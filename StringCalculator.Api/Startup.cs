@@ -44,8 +44,6 @@ namespace StringCalculator.Api
             services.AddHealthChecks();
             services.AddHealthChecks().AddCheck<LoggerHealthCheck>("logger_health_check", failureStatus: HealthStatus.Degraded,
                 tags: new[] {"logger"});
-            services.AddHealthChecks().AddCheck<ErrorHealthCheck>("error_health_check", failureStatus: HealthStatus.Degraded,
-                tags: new[] {"error"});
         }
 
         private static void ConfigureScopes(IServiceCollection services)
