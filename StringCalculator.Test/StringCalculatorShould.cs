@@ -6,7 +6,6 @@ namespace StringCalculator.Test
 {
     public class StringCalculatorShould
     {
-        private MockUser mockUser;
         [Test]
         public void return_zero_when_string_is_empty()
         {
@@ -98,11 +97,14 @@ namespace StringCalculator.Test
 
             result.Should().Be(expected);
         }
-        
-    }
 
-    internal interface MockUser
-    {
-        void WriteInConsole();
+        [Test]
+        public void return_add_negative_numbers_in_version_2()
+        {
+            var input = "-1";
+            var result = StringCalculator.ExecuteV2(input);
+            result.Should().Be(-1);
+        }
+
     }
 }
