@@ -10,11 +10,11 @@ namespace StringCalculator.Api.Controllers
     [Produces("application/json")]
     public class StringCalculatorV2 : ControllerBase
     {
-        private readonly GetStringCalculatorV1 _stringCalculatorV1V2;
+        private readonly GetStringCalculatorV2 stringCalculatorV2;
 
-        public StringCalculatorV2(GetStringCalculatorV1 stringCalculatorV1V2)
+        public StringCalculatorV2(GetStringCalculatorV2 stringCalculatorV2)
         {
-            this._stringCalculatorV1V2 = stringCalculatorV1V2;
+            this.stringCalculatorV2 = stringCalculatorV2;
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace StringCalculator.Api.Controllers
             try
             {
                 var parsedInput = input.Replace("\\n", "\n");
-                return Ok(_stringCalculatorV1V2.Execute(parsedInput));
+                return Ok(stringCalculatorV2.Execute(parsedInput));
             }
             catch (InvalidOperationException e)
             {

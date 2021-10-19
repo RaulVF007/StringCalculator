@@ -9,3 +9,7 @@
 19/10/2021 11:36 - Process Finished: '1,2,3', result: 6
 19/10/2021 11:38 - Process Finished: '1,2,3', result: 6
 19/10/2021 11:38 - Process Finished: '1,2,3', result: 6
+19/10/2021 12:14 - Process Finished: '1,2,3', result: 6
+19/10/2021 12:17 - Process Finished: '1,2,3', result: 6
+19/10/2021 12:17 - Process Finished: '1,2,3', result: 6
+19/10/2021 12:17 - Process Finished: '1,2,-3', result: 0

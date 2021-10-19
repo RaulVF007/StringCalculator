@@ -12,3 +12,4 @@
 19/10/2021 11:02 - Process Finished: '//;1;2\n3', result: ERROR: Incorrect Format
 19/10/2021 11:02 - Process Finished: '//;1;2\n3', result: ERROR: Incorrect Format
 19/10/2021 11:38 - Process Finished: '1,2,-3', result: negatives not allowed: -3
+19/10/2021 12:14 - Process Finished: '1,2,-3', result: negatives not allowed: -3
