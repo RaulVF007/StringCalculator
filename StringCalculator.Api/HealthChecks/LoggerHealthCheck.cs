@@ -10,7 +10,7 @@ namespace StringCalculator.Api.HealthChecks
             HealthCheckContext context, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = true;
+            var healthCheckResultHealthy = false;
             if (healthCheckResultHealthy)
             {
                 return Task.FromResult(

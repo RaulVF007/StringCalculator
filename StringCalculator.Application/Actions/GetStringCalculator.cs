@@ -24,18 +24,18 @@ namespace StringCalculator.Application.Actions
                 catch (ArithmeticException e)
                 {
                     logger.AddErrorEntry(consoleInput, e.Message);
-                    return e.Message;
+                    throw e;
                 }
-                catch
+                catch(Exception e)
                 {
                     logger.AddErrorEntry(consoleInput, "ERROR: Incorrect Format");
-                    return "error";
+                    throw e;
                 }
         }
 
         private string CalculateStringInput(string consoleInput)
         {
-            var calculatedString = StringCalculator.Execute(consoleInput);
+            var calculatedString = StringCalculator.ExecuteV1(consoleInput);
             this.logger.AddEntry(consoleInput, calculatedString);
             return calculatedString.ToString();
         }

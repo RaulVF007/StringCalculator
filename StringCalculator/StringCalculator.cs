@@ -11,7 +11,15 @@ namespace StringCalculator
         private const string CHANGE_SEPARATOR_TAG = "//";
         private const string EXC_NEGATIVE_NOT_ALLOWED = @"negatives not allowed:{0}";
 
-        public static int Execute(string input)
+        public static int ExecuteV1(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return 0;
+            var numbers = Transform(input);
+            var validNumbers = GetValidNumbers(numbers);
+            return validNumbers.Sum();
+        }
+
+        public static int ExecuteV2(string input)
         {
             if (string.IsNullOrEmpty(input)) return 0;
             var numbers = Transform(input);

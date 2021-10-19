@@ -32,6 +32,7 @@ namespace StringCalculator.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApiVersioning();
 
             ConfigureHealthChecks(services);
             ConfigureScopes(services);
@@ -99,7 +100,7 @@ namespace StringCalculator.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+                endpoints.MapHealthChecks("/status.json", new HealthCheckOptions()
                 {
                     ResponseWriter = WriteResponse
                 });
