@@ -8,6 +8,7 @@ using StringCalculator.Application.Actions;
 using StringCalculator.Infrastructure;
 using ILogger = StringCalculator.Application.Model.ILogger;
 using Microsoft.OpenApi.Models;
+using StringCalculator.Api.HealthChecks;
 
 namespace StringCalculator.Api
 {
@@ -24,7 +25,11 @@ namespace StringCalculator.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddHealthChecks();
+            services.AddHealthChecks().AddCheck<LoggerHealthCheck>("logger_health_check");
+            services.AddHealthChecks().AddCheck<ErrorHealthCheck>("error_health_check");
+
             services.AddScoped<GetStringCalculator>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
             AddSwagger(services);

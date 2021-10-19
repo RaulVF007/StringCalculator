@@ -4,13 +4,13 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace StringCalculator.Api.HealthChecks
 {
-    public class LoggerHealthCheck: IHealthCheck
+    public class ErrorHealthCheck : IHealthCheck
     {
         public Task<HealthCheckResult> CheckHealthAsync(
-            HealthCheckContext context, 
+            HealthCheckContext context,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var healthCheckResultHealthy = true;
+            var healthCheckResultHealthy = false;
             if (healthCheckResultHealthy)
             {
                 return Task.FromResult(
