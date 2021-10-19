@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using StringCalculator.Application.Actions;
 using StringCalculator.Infrastructure;
@@ -26,13 +27,24 @@ namespace StringCalculator.Api
         {
             services.AddControllers();
 
-            services.AddHealthChecks();
-            services.AddHealthChecks().AddCheck<LoggerHealthCheck>("logger_health_check");
-            services.AddHealthChecks().AddCheck<ErrorHealthCheck>("error_health_check");
+            ConfigureHealthChecks(services);
+            ConfigureScopes(services);
+            AddSwagger(services);
+        }
 
+        private static void ConfigureHealthChecks(IServiceCollection services)
+        {
+            services.AddHealthChecks();
+            services.AddHealthChecks().AddCheck<LoggerHealthCheck>("logger_health_check", failureStatus: HealthStatus.Degraded,
+                tags: new[] {"logger"});
+            services.AddHealthChecks().AddCheck<ErrorHealthCheck>("error_health_check", failureStatus: HealthStatus.Degraded,
+                tags: new[] {"error"});
+        }
+
+        private static void ConfigureScopes(IServiceCollection services)
+        {
             services.AddScoped<GetStringCalculator>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
-            AddSwagger(services);
         }
 
         private void AddSwagger(IServiceCollection services)
