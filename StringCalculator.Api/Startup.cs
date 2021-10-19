@@ -50,7 +50,7 @@ namespace StringCalculator.Api
 
         private static void ConfigureScopes(IServiceCollection services)
         {
-            services.AddScoped<GetStringCalculator>();
+            services.AddScoped<GetStringCalculatorV1>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
         }
 

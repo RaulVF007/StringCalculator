@@ -3,12 +3,12 @@ using StringCalculator.Application.Model;
 
 namespace StringCalculator.Application.Actions
 {
-    public class GetStringCalculator
+    public class GetStringCalculatorV1
     {
 
         private static readonly string APP_TITLE = "String Calculator";
         private ILogger logger;
-        public GetStringCalculator(ILogger logger)
+        public GetStringCalculatorV1(ILogger logger)
         {
             this.logger = logger;
         }
