@@ -23,8 +23,7 @@ namespace StringCalculator
         {
             if (string.IsNullOrEmpty(input)) return 0;
             var numbers = Transform(input);
-            var validNumbers = GetSmallNumbers(numbers);
-            return validNumbers.Sum();
+            return numbers.Where(IsSmallNumber).Sum();
         }
 
         private static IEnumerable<int> Transform(string input)
@@ -71,11 +70,6 @@ namespace StringCalculator
             var negativeList = numbers.Where(IsNegativeNumber);
             if (negativeList.Any())
                 throw new ArithmeticException(GetNegativeMessageException(negativeList));
-            return numbers.Where(IsSmallNumber);
-        }
-
-        private static IEnumerable<int> GetSmallNumbers(IEnumerable<int> numbers)
-        {
             return numbers.Where(IsSmallNumber);
         }
 
