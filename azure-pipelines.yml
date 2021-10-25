@@ -6,44 +6,50 @@
 trigger:
   branches:
     include:
-    - main
+      - main
   paths:
     exclude:
-    - ./*.md
-    - ./.gitignore 
+      - README.md
+      - logs/*
 
 pool: 'Aida'
+
 workspace:
     clean: all
+
 name: $(Date:yy.MM.dd.HHmm)
 
 steps:
 - task: UseDotNet@2
+  displayName: "Use NetCore 3.1"
   inputs:
+    packageType: 'runtime'
     version: '3.1.x'
-    packageType: runtime
-  displayName: 'Use runtime'
 
 - task: DotNetCoreCLI@2
+  displayName: "Restore"
   inputs:
     command: 'restore'
     projects: 'StringCalculator.sln'
+    arguments: "--configuration Release"
     feedsToUse: 'select'
-  displayName: 'Restore nugget package'
-  
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: 'StringCalculator.sln'
-  displayName: 'Build'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: 'StringCalculator.sln'
-  displayName: 'Test'
 
 - task: DotNetCoreCLI@2
-  displayName: Zip project
+  displayName: "Build"
+  inputs:
+    command: 'build'
+    arguments: "--configuration Release --no-restore"
+    projects: 'StringCalculator.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: "Test"
+  inputs:
+    command: 'test'
+    arguments: "--configuration Release --no-restore --no-build"
+    projects: 'StringCalculator.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: Zip Project
   inputs:
     command: publish
     publishWebProjects: false
