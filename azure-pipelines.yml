@@ -41,3 +41,14 @@ steps:
     command: 'test'
     projects: 'StringCalculator.sln'
   displayName: 'Test'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: "StringCalculator.Api/StringCalculator.Api.csproj"
+    arguments: "-c Release -r win-x64 --self-contained --output $(build.artifactstagingdirectory)"
+  displayName: 'Zip project'
+  
+- task: PublishBuildArtifacts@1
+  displayName: Publish
