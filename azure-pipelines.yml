@@ -41,3 +41,17 @@ steps:
     command: 'test'
     projects: 'StringCalculator.sln'
   displayName: 'Test'
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish"
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments : '--output $(Build.ArtifactStagingDirectory) --configuration Release --no-restore --no-build'
+
+- task: PublishBuildArtifacts@1
+  displayName: "Drop artifact"
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
