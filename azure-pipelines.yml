@@ -43,15 +43,12 @@ steps:
   displayName: 'Test'
 
 - task: DotNetCoreCLI@2
-  displayName: "Publish"
+  displayName: Zip project
   inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments : '--output $(Build.ArtifactStagingDirectory) --configuration Release --no-restore --no-build'
+    command: publish
+    publishWebProjects: false
+    projects: "StringCalculator.Api/StringCalculator.Api.csproj"
+    arguments: "-c Release --output $(build.artifactstagingdirectory)"
 
 - task: PublishBuildArtifacts@1
-  displayName: "Drop artifact"
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  displayName: Publish
