@@ -7,15 +7,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using StringCalculator.Application.Actions;
 using StringCalculator.Infrastructure;
 using ILogger = StringCalculator.Application.Model.ILogger;
 using Microsoft.OpenApi.Models;
 using StringCalculator.Api.HealthChecks;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace StringCalculator.Api
 {
@@ -36,7 +39,18 @@ namespace StringCalculator.Api
 
             ConfigureHealthChecks(services);
             ConfigureScopes(services);
-            AddSwagger(services);
+            services.AddSwaggerGen();
+
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+            });
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+            services.ConfigureOptions<ConfigureSwaggerOptions>();
         }
 
         private static void ConfigureHealthChecks(IServiceCollection services)
@@ -52,30 +66,52 @@ namespace StringCalculator.Api
             services.AddScoped<GetStringCalculatorV2>();
             services.AddScoped<ILogger, StringCalculatorLogger>();
         }
-
-        private void AddSwagger(IServiceCollection services)
+        public class ConfigureSwaggerOptions
+            : IConfigureNamedOptions<SwaggerGenOptions>
         {
-            services.AddSwaggerGen(options =>
-            {
-                var groupName = "v1";
+            private readonly IApiVersionDescriptionProvider provider;
 
-                options.SwaggerDoc(groupName, new OpenApiInfo
+            public ConfigureSwaggerOptions(
+                IApiVersionDescriptionProvider provider)
+            {
+                this.provider = provider;
+            }
+
+            public void Configure(SwaggerGenOptions options)
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    Title = $"Foo {groupName}",
-                    Version = groupName,
-                    Description = "Foo API",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Foo Company",
-                        Email = string.Empty,
-                        Url = new Uri("https://foo.com/"),
-                    }
-                });
-            });
+                    options.SwaggerDoc(
+                        description.GroupName,
+                        CreateVersionInfo(description));
+                }
+            }
+
+            public void Configure(string name, SwaggerGenOptions options)
+            {
+                Configure(options);
+            }
+
+            private OpenApiInfo CreateVersionInfo(
+                ApiVersionDescription description)
+            {
+                var info = new OpenApiInfo()
+                {
+                    Title = "String Calculator API",
+                    Version = description.ApiVersion.ToString()
+                };
+
+                if (description.IsDeprecated)
+                {
+                    info.Description += " This API version has been deprecated.";
+                }
+
+                return info;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -91,9 +127,14 @@ namespace StringCalculator.Api
             app.UseRouting();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foo API V1");
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
             });
 
             app.UseEndpoints(endpoints =>

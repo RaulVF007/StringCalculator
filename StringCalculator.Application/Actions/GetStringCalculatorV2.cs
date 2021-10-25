@@ -3,7 +3,7 @@ using StringCalculator.Application.Model;
 
 namespace StringCalculator.Application.Actions
 {
-    public class GetStringCalculatorV2
+    public class GetStringCalculatorV2: GetStringCalculator
     {
 
         private static readonly string APP_TITLE = "String Calculator";
