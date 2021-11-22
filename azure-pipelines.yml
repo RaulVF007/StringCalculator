@@ -59,7 +59,7 @@ steps:
     arguments: "--configuration Release --no-restore --no-build"
     projects: 'StringCalculator.sln'
 - ${{ if parameters.runCodeAnalysis }}:
-  - template: /CrossCutting and Innovation/aida-templates/azuredevops-templates/code-quality-tool-template.yml
+  - template: azuredevops-templates/code-quality-tool-template.yml@templates
     parameters:
       workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: DotNetCoreCLI@2
