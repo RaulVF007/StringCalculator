@@ -12,6 +12,11 @@ trigger:
       - README.md
       - logs/*
 
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: CrossCutting and Innovation/aida-templates
 pool: 'Aida'
 
 workspace:
@@ -47,7 +52,10 @@ steps:
     command: 'test'
     arguments: "--configuration Release --no-restore --no-build"
     projects: 'StringCalculator.sln'
-
+- ${{ if parameters.runCodeAnalysis }}:
+  - template: ./azuredevops-templates/code-quality-tool-template.yml
+    parameters:
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: DotNetCoreCLI@2
   displayName: Zip Project
   inputs:
