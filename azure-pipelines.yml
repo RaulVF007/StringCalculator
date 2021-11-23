@@ -58,10 +58,10 @@ steps:
     command: 'test'
     arguments: "--configuration Release --no-restore --no-build"
     projects: 'StringCalculator.sln'
-- ${{ if parameters.runCodeAnalysis }}:
-  - template: azuredevops-templates/code-quality-tool-template.yml@templates
-    parameters:
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- template: azuredevops-templates/code-quality-tool-template.yml@templates
+  parameters:
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: DotNetCoreCLI@2
   displayName: Zip Project
   inputs:
